@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+
+    <style>
+        .images {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+
+
+
+        }
+
+        .points {
+            text-align: center;
+            width: 900px;
+            margin: 0 auto;
+
+
+        }
+
+        .buttons-and-boxes {
+            text-align: center;
+            width: 900px;
+            margin: 0 auto;
+
+
+        }
+
+        #get-game-btn {
+
+            width: 200px;
+            height: 70px;
+            font-size: 20px;
+            padding: 10px 20px;
+        }
+
+        #guess-game-btn {
+            width: 200px;
+            height: 70px;
+            font-size: 20px;
+            padding: 10px 20px;
+        }
+
+        #guessbox {
+            width: 465px;
+            height: 40px;
+            font-size: 25px;
+        }
+
+        #prev-img-btn {
+            width: 70px;
+            height: 40px;
+            float: left;
+            font-size: 20px;
+
+
+        }
+
+        #next-img-btn {
+            width: 70px;
+            height: 40px;
+            float: right;
+            font-size: 20px;
+
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+
+    <h1 style="text-align: center;">QUIZ GAME</h1>
+    <br>
+
+    <div class="points">
+        <span id="point-gain" style="float: left;">Alınacak Puan:</span>
+        <span id="total-point">Toplam Puan: 0</span>
+        <span id="max-point" style="float: right;">Maksimum Puan: 0</span>
+        <br>
+
+    </div>
+
+    <div class="images">
+
+
+
+
+        <img id="image-section" src="" alt="Oyun Görseli">
+
+
+
+
+
+    </div>
+
+    <div class="buttons-and-boxes">
+
+        <button id="prev-img-btn"> ◀ </button>
+        <button id="next-img-btn"> ▶ </button>
+
+
+        <br>
+        <br>
+
+
+        <button id="get-game-btn">Skip Game</button>
+        <button id="guess-game-btn">Guess</button>
+        <br>
+        <br>
+        <input type="text" id="guessbox" size="30" placeholder="Search the game" list="game-names">
+        <br>
+
+        <datalist id="game-names">
+
+        </datalist>
+
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    iota anonim şirketi
+
+
+
+
+
+
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", fetchGame);
+
+        document.addEventListener("DOMContentLoaded", getGameNames);
+
+        document.getElementById("max-point").innerHTML = "Maksimum Puan: " + getMaxScore();
+
+        document.getElementById("get-game-btn").addEventListener("click", fetchGame);
+
+        document.getElementById("next-img-btn").addEventListener("click", function () { showImage(1) });
+
+        document.getElementById("prev-img-btn").addEventListener("click", function () { showImage(-1) });
+
+        document.getElementById("guess-game-btn").addEventListener("click", checkGame);
+
+        imageElement = document.getElementById('image-section');
+
+        /*
+        function getGameNames() {
+
+            fetch("quizgame/api/get-game-names")
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.games);
+
+                    dataList = document.getElementById("game-names");
+            dataList.innerHTML = "";
+
+
+            data.games.forEach(game => {
+                const option = document.createElement("option");
+                option.value = game; // Her oyun ismini option olarak ekle
+                dataList.appendChild(option);
+            });
+
+                })
+            
+        }
+        */   // BU OK FONKSİYONLARI KULLANILARAK .then() YAPISIYLA ZİNCİRLEME OLARAK YAPILMIŞ HALİ BUNU JS'DE YENİ ÖĞRENDİM BİR ALTTA KLASİK BİLDİĞİM HALİ VAR.
+
+        
+        async function getGameNames() { // Verinin tamamını çekmekte sakınca yok bence dümdüz string veri çekiyoz her seferinde sunucuya sorgu atmaktan iyidir.
+            try {
+                const response = await fetch("quizgame/api/get-game-names");
+                const data = await response.json();
+
+                const dataList = document.getElementById("game-names");
+                dataList.innerHTML = '';
+
+                data.games.forEach(function (gameName) {
+                    const option = document.createElement("option");
+                    option.value = gameName;
+                    dataList.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Hata:", error);
+            }
+
+
+        }
+
+
+
+        let currentGame
+
+        let seenImages = []
+
+        let totalPoint = 0
+        let pointGain = 1000
+        let maxSeenIndex
+
+        function getMaxScore() {
+            return parseInt(localStorage.getItem("maxScore")) || 0;
+        }
+
+
+        function fetchGame() {
+
+            fetch("quizgame/api/get-game")
+                .then(response => response.json())
+                .then(data => {
+                    currentImageIndex = 0;
+                    images = [data.image1, data.image2, data.image3, data.image4, data.image5]
+                    showImage(0)
+                    console.log("oyun adı:", data.name);
+
+                    currentGame = data.name
+
+                    seenImages = [true, false, false, false, false]
+                    pointGain = 1000
+                    document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
+                    maxSeenIndex = 0
+
+
+                })
+                .catch(error => { console.error("Hata:", error) });
+        }
+
+
+        function showImage(direction) {
+            if (direction == 0) {
+                imageElement.src = images[currentImageIndex];
+            }
+            else if (direction == 1) {
+                if (currentImageIndex != 4) {
+                    currentImageIndex = currentImageIndex + 1;
+                    imageElement.src = images[currentImageIndex]
+
+                }
+                else {
+
+                }
+            }
+            else if (direction == -1) {
+                if (currentImageIndex != 0) {
+                    currentImageIndex = currentImageIndex - 1;
+                    imageElement.src = images[currentImageIndex]
+
+                }
+                else {
+
+                }
+
+            }
+
+            console.log(seenImages)
+            console.log(pointGain)
+
+            if (seenImages[currentImageIndex] == false) {
+                seenImages[currentImageIndex] = true;
+                pointGain -= 200;
+
+                document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
+
+
+            }
+
+        }
+
+        function showImageByIndex(index) {
+            imageElement.src = images[index]
+            currentImageIndex = index
+
+            if (seenImages[currentImageIndex] == false) {
+                seenImages[currentImageIndex] = true;
+                pointGain -= 200;
+
+                document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
+
+
+            }
+
+        }
+
+
+
+        function checkGame() {
+            gameEntry = document.getElementById("guessbox").value
+
+            if (currentGame == gameEntry) {
+                totalPoint += pointGain
+                document.getElementById("total-point").innerHTML = "Toplam Puan: " + totalPoint
+                if (totalPoint > getMaxScore()) {
+                    localStorage.setItem("maxScore", totalPoint);
+                }
+                document.getElementById("max-point").innerHTML = "Maksimum Puan: " + getMaxScore();
+                fetchGame();
+
+            }
+            else {
+
+                for (let i = 0; i < seenImages.length; i++) {
+                    if (seenImages[i] == false) {
+                        showImageByIndex(i);
+                        break;
+                    }
+                }
+
+            }
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>
