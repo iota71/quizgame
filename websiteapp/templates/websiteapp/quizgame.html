@@ -208,7 +208,11 @@
 
     <script>
 
-        document.addEventListener("DOMContentLoaded", function () { fetchGame(); await getGameNames(); updateIndicators(currentImageIndex, seenImages) });
+        document.addEventListener("DOMContentLoaded", async function () {
+            fetchGame(); 
+            await getGameNames(); 
+            updateIndicators(currentImageIndex, seenImages);
+        });
 
         document.getElementById("max-point").innerHTML = "Maksimum Puan: " + getMaxScore();
 
