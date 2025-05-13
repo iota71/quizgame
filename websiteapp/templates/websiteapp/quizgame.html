@@ -261,10 +261,9 @@
                     const option = document.createElement("option");
                     option.value = gameName;
                     dataList.appendChild(option);
-                    gameQuantity = data.games.length;
-
 
                 });
+                gameQuantity = data.games.length;
             } catch (error) {
                 console.error("Hata:", error);
             }
