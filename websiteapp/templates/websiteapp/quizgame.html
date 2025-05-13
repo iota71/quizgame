@@ -209,8 +209,8 @@
     <script>
 
         document.addEventListener("DOMContentLoaded", async function () {
-            fetchGame(); 
             await getGameNames(); 
+            fetchGame();   
             updateIndicators(currentImageIndex, seenImages);
         });
 
