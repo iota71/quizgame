@@ -5,125 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guessify</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../static/websiteapp/style.css">
+    <!--{% load static %}-->
 
-    <style>
-        .images {
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            width: 100%;
-            background-color: rgb(0, 13, 29);      
-
-        }
-
-        #image-section {
-            border: 1px solid grey
-
-
-        }
-
-        .points {
-            text-align: center;
-            width: 900px;
-            margin: 0 auto;
-            color: white;
-            font-size: 18px;
-            font-weight: 500;
-
-        }
-
-        .buttons-and-boxes {
-            text-align: center;
-            width: 900px;
-            margin: 0 auto;
-
-
-        }
-
-        #get-game-btn {
-
-            width: 200px;
-            height: 70px;
-            font-size: 24px;
-            padding: 10px 20px;
-            background-color: grey;
-            color: white;
-        }
-
-        #guess-game-btn {
-            width: 200px;
-            height: 70px;
-            font-size: 24px;
-            padding: 10px 20px;
-            background-color: grey;
-            color: white;
-        }
-
-        #guessbox {
-            width: 465px;
-            height: 40px;
-            font-size: 25px;
-
-        }
-
-        #prev-img-btn {
-            width: 70px;
-            height: 40px;
-            float: left;
-            font-size: 20px;
-            background-color: grey;
-            border: 1px solid #000;
-            {% comment %} border-radius: 50% {% endcomment %}
-
-        }
-
-        #next-img-btn {
-            width: 70px;
-            height: 40px;
-            float: right;
-            font-size: 20px;
-            background-color: grey;
-            border: 1px solid #000;
-            {% comment %} border-radius: 50% {% endcomment %}
-
-        }
-
-
-
-        .circle {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            /* daire yapar */
-            background-color: gray;
-            /* başlangıçta gri */
-            border: 2px solid #ccc;
-            transition: background-color 0.3s ease;
-        }
-
-        .circle.seen {
-            background-color: darkgreen;
-            width: 18px;
-            height: 18px;
-        }
-
-        .circle.current {
-            background-color: rgb(0, 177, 0);
-            width: 21px;
-            height: 21px;
-        }
-
-        html,
-        body {
-
-            margin: 0;
-            background-color: rgb(0, 13, 29);
-        }
-    </style>
-
+    <title>Guessy</title>
 
 
 </head>
@@ -132,11 +21,11 @@
 
     <div class="title">
 
-        <h1 style="text-align: center; color: white">GUESSIFY</h1>
+        <h1>GUESSY</h1>
 
     </div>
 
-    <hr>
+    <div class="drawline"></div>
 
     <div class="points">
 
@@ -148,15 +37,15 @@
 
     <div class="images">
 
-        <img id="image-section" src="" alt="Oyun Görseli">
+        <img id="image-section" src="https://placehold.co/900x500" alt="Oyun Görseli">
 
     </div>
 
     <div class="buttons-and-boxes">
 
         <button id="prev-img-btn"> ◀ </button>
-        <div id="indicator-container"
-            style="display: inline-flex; gap: 25px; justify-content: center; margin-top: 10px;">
+
+        <div id="indicator-container">
             <div class="circle" id="circle-0"></div>
             <div class="circle" id="circle-1"></div>
             <div class="circle" id="circle-2"></div>
@@ -165,23 +54,23 @@
         </div>
         <button id="next-img-btn"> ▶ </button>
 
-        <br>
-        <br>
-
-        <span id="game-quantity" style="font-size: 22px; color: white"><b>1/623</b></span>
-
-        <br>
-
-        <div class="skip-guess-buttons">
-            <button id="get-game-btn"><b>Skip Game</b></button>
-            <button id="guess-game-btn"><b>Guess</b></button>
+        <div class="game-quantity-div">
+            <span id="game-quantity" style="font-size: 22px; color: white"><b>1/623</b></span>
         </div>
 
 
-        <br>
+
+
+        <div class="skip-guess-buttons">
+            <button id="get-game-btn" role="button"><b>Skip Game</b></button>
+            <button id="guess-game-btn" role="button"><b>Guess</b></button>
+        </div>
+
+
+
 
         <input type="text" id="guessbox" size="30" placeholder="Search the game" list="game-names">
-        <br>
+
 
         <datalist id="game-names">
 
@@ -190,10 +79,6 @@
 
     </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
 
     <span style="color: white">iota anonim şirketi</span>
     <br>
@@ -201,16 +86,11 @@
 
 
 
-
-
-
-
-
     <script>
 
         document.addEventListener("DOMContentLoaded", async function () {
-            await getGameNames(); 
-            fetchGame();   
+            await getGameNames();
+            fetchGame();
             updateIndicators(currentImageIndex, seenImages);
         });
 
@@ -268,12 +148,12 @@
 
                 });
                 gameQuantity = data.games.length;
+
             } catch (error) {
                 console.error("Hata:", error);
             }
 
         }
-
 
         let playedGames = []
 

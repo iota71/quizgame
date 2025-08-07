@@ -1,0 +1,207 @@
+* {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.title {
+    padding: 10px;
+
+}
+
+.title h1 {
+    text-align: center;
+    color: #6456c0;
+    cursor: pointer;
+}
+
+.drawline {
+    border: 1px solid #3623ac;
+
+    display: box;
+}
+
+.images {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100%;
+    background-color: rgb(0, 13, 29);
+
+}
+
+#image-section {
+    border: 2px solid #3623ac;
+
+}
+
+.points {
+    text-align: center;
+    width: 900px;
+    margin: 0 auto;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 25px;
+
+}
+
+.buttons-and-boxes {
+    text-align: center;
+    width: 904px;
+    margin: 0 auto;
+
+}
+
+.skip-guess-buttons button {
+    background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: "Inter UI", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    height: 4rem;
+    padding: 0 1.6rem;
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+    transition: all .5s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin: 1rem 1.5rem 1rem 1.5rem;
+    width: 10rem;
+}
+
+#get-game-btn:hover {
+    box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+    transition-duration: .1s;
+
+}
+
+#guess-game-btn:hover {
+    box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+    transition-duration: .1s;
+
+}
+
+#guess-game-btn:active,
+#get-game-btn:active {
+    border-radius: 15px;
+    font-size: 17px;
+}
+
+/*
+@media (min-width: 768px) {
+
+    #guess-game-btn,
+    #get-game-btn {
+        padding: 0 2.6rem;
+    }
+}
+*/
+
+#guessbox {
+    width: 465px;
+    height: 40px;
+    font-size: 25px;
+}
+
+#prev-img-btn {
+    width: 40px;
+    height: 40px;
+    float: left;
+    font-size: 20px;
+    background-color: rgb(0, 8, 19);
+    color: #5643CC;
+    border: 1px solid #3623ac;
+    cursor: pointer;
+    margin-top: 0.5px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    border-radius: 50%;
+    transition: all ease-out 0.15s;
+
+}
+
+#next-img-btn {
+    width: 40px;
+    height: 40px;
+    float: right;
+    font-size: 20px;
+    background-color: rgb(0, 8, 19);
+    color: #5643CC;
+    border: 1px solid #3623ac;
+    cursor: pointer;
+    margin-top: 0.5px;
+    padding-left: 10px;
+    padding-bottom: 3px;
+    border-radius: 50%;
+    transition: all ease-out 0.15s;
+
+
+}
+
+#prev-img-btn:hover,
+#next-img-btn:hover {
+
+    background-color: #8371f7;
+    color: #1e1555;
+
+
+}
+
+#prev-img-btn:active,
+#next-img-btn:active {
+    width: 37px;
+    height: 37px;
+}
+
+.game-quantity-div {
+    padding-top: 1rem;
+}
+
+#indicator-container {
+    display: inline-flex;
+    gap: 25px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+
+
+.circle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    /* daire yapar */
+    background-color: gray;
+    /* başlangıçta gri */
+    border: 2px solid #ccc;
+    transition: background-color 0.3s ease;
+}
+
+.circle.seen {
+    background-color: darkgreen;
+    width: 18px;
+    height: 18px;
+}
+
+.circle.current {
+    background-color: rgb(0, 177, 0);
+    width: 21px;
+    height: 21px;
+}
+
+html,
+body {
+
+    margin: 0;
+    background-color: rgb(0, 13, 29);
+}
