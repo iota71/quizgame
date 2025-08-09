@@ -9,8 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+        {% load static %}
     <link rel="stylesheet" href="../static/websiteapp/style.css">
-    <!--{% load static %}-->
+    
 
     <title>Guessy</title>
 
@@ -198,7 +199,7 @@
                         currentImageIndex = 0;
                         images = [data.image1, data.image2, data.image3, data.image4, data.image5]
                         showImage(0)
-                        console.log("oyun adı:", data.name);
+                        //console.log("oyun adı:", data.name);
 
                         currentGame = data.name
 
@@ -207,7 +208,7 @@
                         document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
                         maxSeenIndex = 0
                         document.getElementById("guessbox").value = ""
-                        console.log(playedGames)
+                        //console.log(playedGames)
                         playedGames.push(currentGame);
                         document.getElementById("game-quantity").innerHTML = playedGames.length + "/" + gameQuantity
                         updateIndicators(currentImageIndex, seenImages)
@@ -254,8 +255,8 @@
 
             }
 
-            console.log(seenImages)
-            console.log(pointGain)
+            //console.log(seenImages)
+            //console.log(pointGain)
 
             if (seenImages[currentImageIndex] == false) {
                 seenImages[currentImageIndex] = true;
