@@ -63,6 +63,31 @@ def getAllGameNames(request):
     
     return JsonResponse({"games": game_names})
 
+from django.http import JsonResponse
+from .models import Game
+
+def getGameByName(request):
+    requestedGame = request.GET.get("name") 
+
+    if not requestedGame:
+        return JsonResponse({"error": "Oyun adı girmen lazım"}, status=400)
+
+    try:
+        game = Game.objects.get(name__iexact=requestedGame)
+        data = {
+            "name": game.name,
+            "image1": game.image1.url if game.image1 else "",
+            "image2": game.image2.url if game.image2 else "",
+            "image3": game.image3.url if game.image3 else "",
+            "image4": game.image4.url if game.image4 else "",
+            "image5": game.image5.url if game.image5 else ""
+        }
+        return JsonResponse(data)
+    except Game.DoesNotExist:
+        return JsonResponse({"error": "Böyle bir oyun yok"}, status=404)
+
+    
+
     
 
     

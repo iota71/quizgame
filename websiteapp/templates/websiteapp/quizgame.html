@@ -9,9 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-        {% load static %}
+    {% load static %}
     <link rel="stylesheet" href="../static/websiteapp/style.css">
-    
+
 
     <title>Guessy</title>
 
@@ -20,74 +20,81 @@
 
 <body>
 
-    <div class="title">
+    <div class="content">
+        <div class="title">
 
-        <h1>GUESSY</h1>
+            <h1>GUESSY</h1>
 
-    </div>
-
-    <div class="drawline"></div>
-
-    <div class="points">
-
-        <span id="point-gain" style="float: left;">Alınacak Puan:</span>
-        <span id="total-point">Toplam Puan: 0</span>
-        <span id="max-point" style="float: right;">Maksimum Puan: 0</span>
-
-    </div>
-
-    <div class="images">
-
-        <img id="image-section" src="https://placehold.co/900x500" alt="Oyun Görseli">
-
-    </div>
-
-    <div class="buttons-and-boxes">
-
-        <button id="prev-img-btn"> ◀ </button>
-
-        <div id="indicator-container">
-            <div class="circle" id="circle-0"></div>
-            <div class="circle" id="circle-1"></div>
-            <div class="circle" id="circle-2"></div>
-            <div class="circle" id="circle-3"></div>
-            <div class="circle" id="circle-4"></div>
-        </div>
-        <button id="next-img-btn"> ▶ </button>
-
-        <div class="game-quantity-div">
-            <span id="game-quantity" style="font-size: 22px; color: white"><b>1/623</b></span>
         </div>
 
+        <div class="drawline"></div>
+
+        <div class="points">
+
+            <span id="point-gain" style="float: left;">Alınacak Puan:</span>
+            <span id="total-point">Toplam Puan: 0</span>
+            <span id="max-point" style="float: right;">Maksimum Puan: 0</span>
+
+        </div>
+
+        <div class="images">
+
+            <img id="image-section" src="https://placehold.co/900x500" alt="Oyun Görseli">
+
+        </div>
+
+        <div class="text">
+            <span style="color: white">iota anonim şirketi</span>
+            <br>
+            <span style="color: white">IN DEVELOPMENT</span> <span id="dev-mode" style="color: white;" Geliştirici Modu
+                Aktif</span>
+        </div>
+
+        <div class="buttons-and-boxes">
+
+            <button id="prev-img-btn"> ◀ </button>
+
+            <div id="indicator-container">
+                <div class="circle" id="circle-0"></div>
+                <div class="circle" id="circle-1"></div>
+                <div class="circle" id="circle-2"></div>
+                <div class="circle" id="circle-3"></div>
+                <div class="circle" id="circle-4"></div>
+            </div>
+            <button id="next-img-btn"> ▶ </button>
 
 
 
-        <div class="skip-guess-buttons">
-            <button id="get-game-btn" role="button"><b>Skip Game</b></button>
-            <button id="guess-game-btn" role="button"><b>Guess</b></button>
+            <div class="game-quantity-div">
+                <span id="game-quantity" style="font-size: 22px; color: white"><b>1/loading</b></span>
+            </div>
+
+
+            <div class="skip-guess-buttons">
+                <button id="get-game-btn" role="button"><b>Skip Game</b></button>
+                <button id="guess-game-btn" role="button"><b>Guess</b></button>
+            </div>
+
+            <input type="text" id="guessbox" size="30" placeholder="Search the game" list="game-names">
+
+            <input type="text" id="devbox" size="30" placeholder="Oyun getir" list="game-names">
+
+            <button id="dev-get-game-button">Getir</button>
+
+            <datalist id="game-names">
+
+            </datalist>
+
+
         </div>
 
 
 
-
-        <input type="text" id="guessbox" size="30" placeholder="Search the game" list="game-names">
-
-
-        <datalist id="game-names">
-
-        </datalist>
-
-
     </div>
-
-
-    <span style="color: white">iota anonim şirketi</span>
-    <br>
-    <span style="color: white">IN DEVELOPMENT</span>
-
-
 
     <script>
+
+        let developerMode = false
 
         document.addEventListener("DOMContentLoaded", async function () {
             await getGameNames();
@@ -104,6 +111,57 @@
         document.getElementById("prev-img-btn").addEventListener("click", function () { showImage(-1); updateIndicators(currentImageIndex, seenImages) });
 
         document.getElementById("guess-game-btn").addEventListener("click", checkGame);
+        
+        document.getElementById("dev-get-game-button").addEventListener("click", getGameByName)
+
+
+
+        const devBox = document.getElementById("devbox");
+        const devGetGameButton = document.getElementById("dev-get-game-button")
+        
+
+        devBox.disabled = true;
+        devBox.style.display = "none";
+        document.getElementById("dev-mode").innerHTML = "";
+        devGetGameButton.disabled = true;
+        devGetGameButton.style.display = "none";
+        const guessbox = document.getElementById("guessbox");
+        guessbox.removeAttribute("list");
+        
+
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key == "F9" && developerMode == false) {
+                developerMode = true;
+                console.log("Geliştirici modu aktif.");
+                document.getElementById("dev-mode").innerHTML = "Geliştirici Modu Aktif";
+                devBox.disabled = false;
+                devBox.style.display = "block";
+                devGetGameButton.disabled = false;
+                devGetGameButton.style.display = "inline";
+            }
+            else if (event.key == "F9" && developerMode == true) {
+                developerMode = false;
+                document.getElementById("dev-mode").innerHTML = "";
+                console.log("Geliştirici modu deaktif");
+                devBox.disabled = true;
+                devBox.style.display = "none";
+                devGetGameButton.disabled = true;
+                devGetGameButton.style.display = "none";
+            }
+        });
+
+        guessbox.addEventListener("input", function(){
+            if(guessbox.value.length >= 2)
+            {
+                guessbox.setAttribute("list","game-names");
+            }
+            else
+            {
+                guessbox.removeAttribute("list");
+            }
+
+        })
 
         imageElement = document.getElementById('image-section');
 
@@ -133,6 +191,8 @@
 
 
         let gameQuantity
+
+        let dataList
 
         async function getGameNames() { // Verinin tamamını çekmekte sakınca yok bence dümdüz string veri çekiyoz her seferinde sunucuya sorgu atmaktan iyidir.
             try {
@@ -229,6 +289,8 @@
 
 
 
+
+
         function showImage(direction) {
             if (direction == 0) {
                 imageElement.src = images[currentImageIndex];
@@ -263,7 +325,6 @@
                 pointGain -= 200;
 
                 document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
-
 
             }
 
@@ -333,6 +394,49 @@
                 }
             }
         }
+
+
+        function getGameByName() {
+
+            fetch(`/quizgame/api/get-game-by-name?name=${encodeURIComponent(devBox.value)}`)
+                .then(res => res.json())
+                .then(data => {
+
+                    if (data.error) {
+
+                        console.error(data.error);
+                        devBox.value = "Oyun bulunamadı"
+                        
+
+                    }
+                    else {
+                        currentImageIndex = 0;
+                        images = [data.image1, data.image2, data.image3, data.image4, data.image5]
+                        showImage(0)
+                        //console.log("oyun adı:", data.name);
+
+                        currentGame = data.name
+
+                        seenImages = [true, false, false, false, false]
+                        pointGain = 1000
+                        document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
+                        maxSeenIndex = 0
+                        document.getElementById("guessbox").value = ""
+                        //console.log(playedGames)                               
+                        updateIndicators(currentImageIndex, seenImages)
+
+                    }
+                }
+                );
+        }
+
+
+
+
+
+
+
+
 
 
 
