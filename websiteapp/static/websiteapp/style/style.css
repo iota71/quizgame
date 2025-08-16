@@ -1,0 +1,465 @@
+* {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(0, 13, 29);
+}
+
+.title {
+    padding: 1rem;
+}
+
+.title h1 {
+    text-align: center;
+    color: #6456c0;
+    cursor: pointer;
+    margin: 0;
+}
+
+.drawline {
+    border: 1px solid #3623ac;
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.points {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    text-align: center;
+    width: min(90%, 600px);
+    margin: 1.5rem auto;
+    color: white;
+    font-size: clamp(14px, 2.5vw, 18px);
+    font-weight: 500;
+    gap: 1rem;
+}
+
+.images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto;
+    width: fit-content;
+    max-width: min(90vw, 900px);
+    background-color: rgb(0, 13, 29);
+    position: relative;
+}
+
+
+.hint-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 3vw, 1.5rem);
+    align-items: flex-end;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 0.5rem;
+}
+
+.hint-buttons button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: clamp(3rem, 6vw, 4.25rem);
+    height: clamp(3rem, 6vw, 4.25rem);
+    background-color: #6d5ae7;
+    border: 0;
+    border-radius: 10px;
+    color: white;
+    font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hint-buttons button:hover {
+    transform: scale(1.1);
+    color: aliceblue;
+    box-shadow: 0 4px 15px rgba(109, 90, 231, 0.3);
+}
+
+.hint-buttons button.active {
+    width: clamp(5rem, 10vw, 7.5rem);
+    color: black;
+    cursor: default;
+    transform-origin: right center;
+
+}
+
+.hint-buttons button:disabled {
+    opacity: 1;
+    color: black;
+    cursor: default;
+}
+
+.hint-buttons img {
+    width: clamp(1.5rem, 3vw, 2rem);
+    height: auto;
+    margin-bottom: 0.25rem;
+}
+
+.hint-buttons button span {
+    font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+    text-align: center;
+}
+
+#hint-text1,
+#hint-text2,
+#hint-text3 {
+    font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+}
+
+#image-section {
+    border: 2px solid #3623ac;
+    display: block;
+    max-width: min(90vw, 900px);
+    max-height: min(70vh, 500px);
+    width: 100%;
+    height: auto;
+    margin: 0;
+    object-fit: contain;
+}
+
+.text {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    color: white;
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    z-index: 100;
+    padding: 0.5rem;
+    background-color: rgba(0, 13, 29, 0.8);
+}
+
+.menu-div {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.menu {
+    display: flex;
+    list-style-type: none;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0.5rem;
+    color: white;
+    font-size: clamp(0.875rem, 1.8vw, 1rem);
+    background-color: rgba(0, 13, 29, 0.8);
+}
+
+.menu li {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.menu li:hover {
+    background-color: rgba(100, 86, 192, 0.3);
+}
+
+/* Butonlar ve kutular container'ı - image'a çok yakın */
+.buttons-and-boxes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    /* Daha da küçük gap */
+    width: min(95%, 904px);
+    margin: 0.25rem auto 0 auto;
+    /* Üst margin çok küçük, alt margin 0 */
+    text-align: center;
+}
+
+.indicator-nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1rem, 4vw, 2rem);
+    width: 100%;
+    margin: 0;
+}
+
+#prev-img-btn,
+#next-img-btn {
+    width: clamp(2.5rem, 4vw, 3rem);
+    height: clamp(2.5rem, 4vw, 3rem);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    background-color: rgb(0, 8, 19);
+    color: #5643CC;
+    border: 1px solid #3623ac;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all ease-out 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#prev-img-btn {
+    padding-right: 10px;
+}
+
+#next-img-btn {
+    padding-left: 10px;
+}
+
+#prev-img-btn:hover,
+#next-img-btn:hover {
+    background-color: #8371f7;
+    color: #1e1555;
+}
+
+#prev-img-btn:active,
+#next-img-btn:active {
+    transform: scale(0.9);
+}
+
+#indicator-container {
+    display: flex;
+    gap: clamp(1rem, 3vw, 1.5rem);
+    justify-content: center;
+    align-items: center;
+}
+
+.circle {
+    width: clamp(1.125rem, 2.5vw, 1.3rem);
+    height: clamp(1.125rem, 2.5vw, 1.3rem);
+    border-radius: 50%;
+    background-color: gray;
+    border: 2px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+.circle.seen {
+    background-color: darkgreen;
+}
+
+.circle.current {
+    background-color: rgb(0, 177, 0);
+    transform: scale(1.2);
+}
+
+.game-quantity-div {
+    margin: 0.25rem 0;
+}
+
+#game-quantity {
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    color: white;
+}
+
+.skip-guess-buttons {
+    display: flex;
+    gap: clamp(1rem, 3vw, 2rem);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.skip-guess-buttons button {
+    background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+    border-radius: 8px;
+    border-style: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: clamp(1rem, 2.2vw, 1.125rem);
+    font-weight: bold;
+    height: 4rem;
+    padding: 0 clamp(1rem, 3vw, 1.6rem);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+    transition: all .3s;
+    user-select: none;
+    min-width: clamp(8rem, 20vw, 10rem);
+}
+
+#get-game-btn:hover,
+#guess-game-btn:hover {
+    box-shadow: rgba(80, 63, 205, 0.8) 0 0 30px;
+    transform: translateY(-2px);
+}
+
+#guess-game-btn:active,
+#get-game-btn:active {
+    transform: translateY(1px);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+/* Input alanları - çok yakın */
+#guessbox {
+    width: min(100%, 465px);
+    height: clamp(2.5rem, 4vw, 3rem);
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    padding: 0.5rem;
+    border: 2px solid #3623ac;
+    border-radius: 8px;
+    background-color: rgb(0, 8, 19);
+    color: white;
+    text-align: center;
+    margin-top: 0.25rem;
+    /* Daha da küçük */
+}
+
+#devbox {
+    width: min(100%, 465px);
+    height: clamp(2rem, 3.5vw, 2.5rem);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    padding: 0.5rem;
+    border: 1px solid #3623ac;
+    border-radius: 8px;
+    background-color: rgb(0, 8, 19);
+    color: white;
+    text-align: center;
+    margin-top: 0.125rem;
+}
+
+#dev-get-game-button {
+    margin-top: 0.125rem;
+}
+
+#dev-get-game-button button {
+    background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+    border-radius: 8px;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#dev-get-game-button button:hover {
+    box-shadow: rgba(80, 63, 205, 0.8) 0 0 20px;
+    transform: translateY(-1px);
+}
+
+footer {
+    margin: 0;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .images {
+        gap: 2rem;
+    }
+
+    .indicator-nav-container {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .images {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .hint-buttons {
+        position: static;
+        flex-direction: row;
+        gap: 1rem;
+        align-items: center;
+        transform: none;
+        margin-right: 0;
+    }
+
+    .hint-buttons button.active {
+        transform: none;
+    }
+
+    .points {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, auto);
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .skip-guess-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .skip-guess-buttons button {
+        width: 100%;
+    }
+
+    .text {
+        position: static;
+        text-align: center;
+        margin: 1rem 0;
+    }
+
+    .menu-div {
+        position: static;
+        text-align: center;
+        margin: 1rem 0;
+    }
+
+    .menu {
+        justify-content: center;
+    }
+
+    .indicator-nav-container {
+        gap: 1.5rem;
+    }
+
+    #indicator-container {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hint-buttons button {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 0.5rem;
+    }
+
+    .hint-buttons button.active {
+        width: 4rem;
+    }
+
+    .hint-buttons img {
+        width: 1.25rem;
+    }
+
+    .skip-guess-buttons button {
+        font-size: 0.875rem;
+        height: 3rem;
+        min-width: auto;
+    }
+
+    .indicator-nav-container {
+        gap: 1rem;
+    }
+
+    #indicator-container {
+        gap: 0.75rem;
+    }
+
+    .circle {
+        width: 1rem;
+        height: 1rem;
+    }
+}

@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     {% load static %}
-    <link rel="stylesheet" href="../static/websiteapp/style.css">
+    <link rel="stylesheet" href="../static/websiteapp/style/style.css">
 
 
     <title>Guessy</title>
@@ -19,8 +19,7 @@
 </head>
 
 <body>
-
-    <div class="content">
+    
         <div class="title">
 
             <h1>GUESSY</h1>
@@ -39,9 +38,30 @@
 
         <div class="images">
 
+
+            <div class="hint-buttons" id="hint-buttons">
+
+                <button id="hint-button1">
+                    <span id="hint-text1">İpucu</span>
+                    <img id="hint-image1" src="../media/images/magnifying_glass.png" alt="">
+                </button>
+
+                <button id="hint-button2">
+                    <span id="hint-text2">İpucu</span>
+                    <img id="hint-image2" src="../media/images/magnifying_glass.png" alt="">
+                </button>
+
+                <button id="hint-button3">
+                    <span id="hint-text3">İpucu</span>
+                    <img id="hint-image3" src="../media/images/magnifying_glass.png" alt="">
+                </button>
+            </div>
+
             <img id="image-section" src="https://placehold.co/900x500" alt="Oyun Görseli">
 
         </div>
+
+
 
         <div class="text">
             <span style="color: white">iota anonim şirketi</span>
@@ -51,17 +71,17 @@
         </div>
 
         <div class="buttons-and-boxes">
-
-            <button id="prev-img-btn"> ◀ </button>
-
-            <div id="indicator-container">
-                <div class="circle" id="circle-0"></div>
-                <div class="circle" id="circle-1"></div>
-                <div class="circle" id="circle-2"></div>
-                <div class="circle" id="circle-3"></div>
-                <div class="circle" id="circle-4"></div>
+            <div class="indicator-nav-container">
+                <button id="prev-img-btn"> ◀ </button>
+                <div id="indicator-container">
+                    <div class="circle" id="circle-0"></div>
+                    <div class="circle" id="circle-1"></div>
+                    <div class="circle" id="circle-2"></div>
+                    <div class="circle" id="circle-3"></div>
+                    <div class="circle" id="circle-4"></div>
+                </div>
+                <button id="next-img-btn"> ▶ </button>
             </div>
-            <button id="next-img-btn"> ▶ </button>
 
 
 
@@ -85,364 +105,24 @@
 
             </datalist>
 
-
         </div>
 
+        <div class="menu-div">
+            <menu class="menu">
+                <li id="settings">Settings</li>
+                <li id="placeholder">Placeholder</li>
 
+            </menu>
+        </div>
 
-    </div>
+    <footer>
 
-    <script>
-
-        let developerMode = false
-
-        document.addEventListener("DOMContentLoaded", async function () {
-            await getGameNames();
-            fetchGame();
-            updateIndicators(currentImageIndex, seenImages);
-        });
-
-        document.getElementById("max-point").innerHTML = "Maksimum Puan: " + getMaxScore();
-
-        document.getElementById("get-game-btn").addEventListener("click", fetchGame);
-
-        document.getElementById("next-img-btn").addEventListener("click", function () { showImage(1); updateIndicators(currentImageIndex, seenImages) });
-
-        document.getElementById("prev-img-btn").addEventListener("click", function () { showImage(-1); updateIndicators(currentImageIndex, seenImages) });
-
-        document.getElementById("guess-game-btn").addEventListener("click", checkGame);
-        
-        document.getElementById("dev-get-game-button").addEventListener("click", getGameByName)
-
-
-
-        const devBox = document.getElementById("devbox");
-        const devGetGameButton = document.getElementById("dev-get-game-button")
-        
-
-        devBox.disabled = true;
-        devBox.style.display = "none";
-        document.getElementById("dev-mode").innerHTML = "";
-        devGetGameButton.disabled = true;
-        devGetGameButton.style.display = "none";
-        const guessbox = document.getElementById("guessbox");
-        guessbox.removeAttribute("list");
-        
-
-
-        document.addEventListener("keydown", function (event) {
-            if (event.key == "F9" && developerMode == false) {
-                developerMode = true;
-                console.log("Geliştirici modu aktif.");
-                document.getElementById("dev-mode").innerHTML = "Geliştirici Modu Aktif";
-                devBox.disabled = false;
-                devBox.style.display = "block";
-                devGetGameButton.disabled = false;
-                devGetGameButton.style.display = "inline";
-            }
-            else if (event.key == "F9" && developerMode == true) {
-                developerMode = false;
-                document.getElementById("dev-mode").innerHTML = "";
-                console.log("Geliştirici modu deaktif");
-                devBox.disabled = true;
-                devBox.style.display = "none";
-                devGetGameButton.disabled = true;
-                devGetGameButton.style.display = "none";
-            }
-        });
-
-        guessbox.addEventListener("input", function(){
-            if(guessbox.value.length >= 2)
-            {
-                guessbox.setAttribute("list","game-names");
-            }
-            else
-            {
-                guessbox.removeAttribute("list");
-            }
-
-        })
-
-        imageElement = document.getElementById('image-section');
-
-        /*
-        function getGameNames() {
-
-            fetch("quizgame/api/get-game-names")
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.games);
-
-                    dataList = document.getElementById("game-names");
-            dataList.innerHTML = "";
-
-
-            data.games.forEach(game => {
-                const option = document.createElement("option");
-                option.value = game; // Her oyun ismini option olarak ekle
-                dataList.appendChild(option);
-            });
-
-                })
-            
-        }
-        */   // BU OK FONKSİYONLARI KULLANILARAK .then() YAPISIYLA ZİNCİRLEME OLARAK YAPILMIŞ HALİ BUNU JS'DE YENİ ÖĞRENDİM BİR ALTTA KLASİK BİLDİĞİM HALİ VAR.
-
-
-
-        let gameQuantity
-
-        let dataList
-
-        async function getGameNames() { // Verinin tamamını çekmekte sakınca yok bence dümdüz string veri çekiyoz her seferinde sunucuya sorgu atmaktan iyidir.
-            try {
-                const response = await fetch("quizgame/api/get-game-names");
-                const data = await response.json();
-
-                const dataList = document.getElementById("game-names");
-                dataList.innerHTML = '';
-
-                data.games.forEach(function (gameName) {
-                    const option = document.createElement("option");
-                    option.value = gameName;
-                    dataList.appendChild(option);
-
-                });
-                gameQuantity = data.games.length;
-
-            } catch (error) {
-                console.error("Hata:", error);
-            }
-
-        }
-
-        let playedGames = []
-
-        let currentGame
-
-        let seenImages = []
-
-        let totalPoint = 0
-        let pointGain = 1000
-        let maxSeenIndex
-
-        let gameOver = false
-
-        function getMaxScore() {
-            return parseInt(localStorage.getItem("maxScore")) || 0;
-        }
-
-
-        function fetchGame() {
-
-            fetch("quizgame/api/get-game", {
-
-                method: "POST",
-                headers: {
-
-                    "Content-Type": "application/json",
-                },
-
-                body: JSON.stringify({ playedGames: playedGames })
-
-            })
-                .then(response => response.json())
-                .then(data => {
-
-                    if (data.error) {
-                        console.error(data.error);
-                        gameOver = true;
-                        document.getElementById("game-quantity").innerHTML = playedGames.length + "/" + gameQuantity + " <br> Oyun kalmadı! Toplam Puan: " + totalPoint
-                        return;
-                    }
-                    else {
-                        currentImageIndex = 0;
-                        images = [data.image1, data.image2, data.image3, data.image4, data.image5]
-                        showImage(0)
-                        //console.log("oyun adı:", data.name);
-
-                        currentGame = data.name
-
-                        seenImages = [true, false, false, false, false]
-                        pointGain = 1000
-                        document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
-                        maxSeenIndex = 0
-                        document.getElementById("guessbox").value = ""
-                        //console.log(playedGames)
-                        playedGames.push(currentGame);
-                        document.getElementById("game-quantity").innerHTML = playedGames.length + "/" + gameQuantity
-                        updateIndicators(currentImageIndex, seenImages)
-
-                    }
-
-
-
-
-
-                })
-                .catch(error => { console.error("Hata:", error) });
-        }
-
-
-
-
-
-
-
-
-
-        function showImage(direction) {
-            if (direction == 0) {
-                imageElement.src = images[currentImageIndex];
-            }
-            else if (direction == 1) {
-                if (currentImageIndex != 4) {
-                    currentImageIndex = currentImageIndex + 1;
-                    imageElement.src = images[currentImageIndex]
-
-                }
-                else {
-
-                }
-            }
-            else if (direction == -1) {
-                if (currentImageIndex != 0) {
-                    currentImageIndex = currentImageIndex - 1;
-                    imageElement.src = images[currentImageIndex]
-
-                }
-                else {
-
-                }
-
-            }
-
-            //console.log(seenImages)
-            //console.log(pointGain)
-
-            if (seenImages[currentImageIndex] == false) {
-                seenImages[currentImageIndex] = true;
-                pointGain -= 200;
-
-                document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
-
-            }
-
-        }
-
-        function showImageByIndex(index) {
-            imageElement.src = images[index]
-            currentImageIndex = index
-
-            if (seenImages[currentImageIndex] == false) {
-                seenImages[currentImageIndex] = true;
-                pointGain -= 200;
-
-                document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
-
-
-            }
-
-        }
-
-
-
-        function checkGame() {
-
-            if (!gameOver) {
-                gameEntry = document.getElementById("guessbox").value
-
-                if (currentGame == gameEntry) {
-                    totalPoint += pointGain
-                    document.getElementById("total-point").innerHTML = "Toplam Puan: " + totalPoint
-                    if (totalPoint > getMaxScore()) {
-                        localStorage.setItem("maxScore", totalPoint);
-                    }
-                    document.getElementById("max-point").innerHTML = "Maksimum Puan: " + getMaxScore();
-                    fetchGame();
-
-                }
-                else {
-
-                    for (let i = 0; i < seenImages.length; i++) {
-                        if (seenImages[i] == false) {
-                            showImageByIndex(i);
-                            updateIndicators(currentImageIndex, seenImages)
-                            break;
-                        }
-                    }
-
-                }
-            }
-
-
-
-            document.getElementById("guessbox").value = ""
-        }
-
-        function updateIndicators(currentImageIndex, seenImages) {
-            for (let i = 0; i < 5; i++) {
-                const circle = document.getElementById(`circle-${i}`);
-                circle.classList.remove("current", "seen");
-
-                if (i < seenImages.length && seenImages[i]) {
-                    circle.classList.add("seen");
-                }
-
-                if (i === currentImageIndex) {
-                    circle.classList.add("current");
-                }
-            }
-        }
-
-
-        function getGameByName() {
-
-            fetch(`/quizgame/api/get-game-by-name?name=${encodeURIComponent(devBox.value)}`)
-                .then(res => res.json())
-                .then(data => {
-
-                    if (data.error) {
-
-                        console.error(data.error);
-                        devBox.value = "Oyun bulunamadı"
-                        
-
-                    }
-                    else {
-                        currentImageIndex = 0;
-                        images = [data.image1, data.image2, data.image3, data.image4, data.image5]
-                        showImage(0)
-                        //console.log("oyun adı:", data.name);
-
-                        currentGame = data.name
-
-                        seenImages = [true, false, false, false, false]
-                        pointGain = 1000
-                        document.getElementById("point-gain").innerHTML = "Alınacak Puan: " + pointGain
-                        maxSeenIndex = 0
-                        document.getElementById("guessbox").value = ""
-                        //console.log(playedGames)                               
-                        updateIndicators(currentImageIndex, seenImages)
-
-                    }
-                }
-                );
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-    </script>
+    </footer>
+    
 
 </body>
+
+
+<script  src="{% static 'websiteapp/script/script.js' %}"></script>
 
 </html>

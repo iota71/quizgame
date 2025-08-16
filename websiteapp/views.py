@@ -53,6 +53,9 @@ def getGame(request):
         "image4": game.image4.url,
         "image5": game.image5.url,
         "name": game.name,
+        "hintDate": game.hintDate,
+        "hintDeveloper": game.hintDeveloper,
+        "hintGenre": game.hintGenre
     }
     
     return JsonResponse(data)
@@ -80,7 +83,10 @@ def getGameByName(request):
             "image2": game.image2.url if game.image2 else "",
             "image3": game.image3.url if game.image3 else "",
             "image4": game.image4.url if game.image4 else "",
-            "image5": game.image5.url if game.image5 else ""
+            "image5": game.image5.url if game.image5 else "",
+            "hintDate": game.hintDate,
+            "hintDeveloper": game.hintDeveloper,
+            "hintGenre": game.hintGenre
         }
         return JsonResponse(data)
     except Game.DoesNotExist:

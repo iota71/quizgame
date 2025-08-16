@@ -1,0 +1,15 @@
+{
+    "title": "GUESSY",
+    "skip": "Skip Game",
+    "guess": "Guess",
+    "hint": "Hint",
+    "total_point": "Total Points: ",
+    "max_point": "Max Points: ",
+    "point_gain": "Points to Gain: ",
+    "dev_mode": "Developer Mode",
+    "game_over": " Game Over! Total Points: ",
+    "release_date": "Release Date",
+    "genre": "Genre",
+    "developer": "Developer",
+    "search_the_game": "Search the game"
+}

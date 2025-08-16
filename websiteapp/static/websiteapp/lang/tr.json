@@ -1,0 +1,15 @@
+{
+    "title": "GUESSY",
+    "skip": "Oyunu Geç",
+    "guess": "Tahmin Et",
+    "hint": "İpucu",
+    "total_point": "Toplam Puan: ",
+    "max_point": "Maksimum Puan: ",
+    "point_gain": "Alınacak Puan: ",
+    "dev_mode": "Geliştirici Modu",
+    "game_over": " Oyun Bitti! Toplam Puan: ",
+    "release_date": "Çıkış Yılı",
+    "genre": "Tür",
+    "developer": "Geliştirici",
+    "search_the_game": "Oyun ara"
+}
