@@ -113,8 +113,8 @@ for (let i = 1; i <= 3; i++) {
     btn.addEventListener("click", () => {
         btn.classList.add("active");
         if (i === 1) { btn.disabled = true; text.textContent = `${langData.release_date}: ` + data.hintDate; pointGain -= pointLoseFromHint; document.getElementById("point-gain").innerHTML = langData.point_gain + pointGain; img.style.display = "none" }
-        else if (i === 2) { btn.disabled = true; text.textContent = `${langData.genre}: ` + data.hintGenre; pointGain -= (pointLoseFromHint + 50); document.getElementById("point-gain").innerHTML = langData.total_point + pointGain; img.style.display = "none" }
-        else if (i === 3) { btn.disabled = true; text.textContent = `${langData.developer}: ` + data.hintDeveloper; pointGain -= (pointLoseFromHint + 300); document.getElementById("point-gain").innerHTML = langData.max_point + pointGain; img.style.display = "none" }
+        else if (i === 2) { btn.disabled = true; text.textContent = `${langData.genre}: ` + data.hintGenre; pointGain -= (pointLoseFromHint + 50); document.getElementById("point-gain").innerHTML = langData.point_gain + pointGain; img.style.display = "none" }
+        else if (i === 3) { btn.disabled = true; text.textContent = `${langData.developer}: ` + data.hintDeveloper; pointGain -= (pointLoseFromHint + 300); document.getElementById("point-gain").innerHTML = langData.point_gain + pointGain; img.style.display = "none" }
 
     });
 

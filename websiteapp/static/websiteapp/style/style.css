@@ -36,7 +36,7 @@ body {
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     text-align: center;
-    width: min(90%, 600px);
+    width: min(90%, 800px);
     margin: 1.5rem auto;
     color: white;
     font-size: clamp(14px, 2.5vw, 18px);
